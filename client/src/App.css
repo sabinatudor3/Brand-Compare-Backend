@@ -1,0 +1,16 @@
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab, tr, td, th {
+  padding: 1em;
+  text-align: center;
+}
+
+.form-part {
+  padding-left: 1em;
+
+}
