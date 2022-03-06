@@ -9,7 +9,6 @@ function App() {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [sumArray, setSumArray] = useState([]);
   const [info, setInfo] = useState([]);
 
   useEffect(() => {
@@ -18,24 +17,8 @@ function App() {
       .then((response) => setData(response.data));
   }, [startDate, endDate]);
 
-  // useEffect(() => {
-  //   setInfo(info);
-  //   const fetchData = async (info) => {
-  //     if (info !== null) {
-  //       await axios
-  //         .post(`http://localhost:9000/testAPI/detail/${info[0]}/${info[1]}`)
-  //         .then((responseInd) => setDataInd(responseInd.data));
-  //     }
-  //     console.log("update" + JSON.stringify(info));
-  //   };
-  //   fetchData(info);
-  // }, [info]);
-
-  // console.log(dataInd);
-
   function handleCalendar() {
     for (let i = 0; i < data.length; i++) {
-      setInfo((info) => []);
       var brand = data[i].profiles;
       brand.map((el) => {
         console.log(el)
@@ -51,6 +34,7 @@ function App() {
   }
 
   var sume = [];
+  console.log(info)
   Object.entries(info).forEach(([key, value]) => {
     var sumFan = 0;
     Object.entries(value).forEach(([key2, value2]) => { 
@@ -58,10 +42,10 @@ function App() {
         sumFan += value2.fans;
       }
     })
-    sume.push({key, sumFan})
+    sume =[...sume, {key, sumFan}];
   })
 
-  console.log(sume)
+  
 
   const itemRows = [];
   for (let item of data) {
@@ -69,7 +53,7 @@ function App() {
       <tr key={item.profiles[0].id}>
         <td key={1}>{item.brandname}</td>
         <td key={2}>{item.profiles.length}</td>
-        {/* <td key={3} >{sumaaa}</td> */}
+        {/* <td key={3} >{sume}</td> */}
       </tr>
     );
     itemRows.push(row);
@@ -85,6 +69,7 @@ function App() {
         <DatePicker
           selected={startDate}
           onChange={(date) => setStartDate(date)}
+          onCalendarClose={handleCalendar}
         />
         <p>End date:</p>
         <DatePicker
